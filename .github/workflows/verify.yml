@@ -6,7 +6,6 @@ on:
       - main
 
 env:
-    DBUSER: foo
     DBPASSWORD: bar
     DATABASE: baz
 
@@ -17,7 +16,6 @@ jobs:
     - uses: actions/checkout@v4
     - run: docker compose up --wait --detach --quiet-pull
       env:
-        DBUSER: ${{ env.DBUSER }}
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
     - run: curl -k -f https://localhost

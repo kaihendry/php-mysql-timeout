@@ -1,11 +1,11 @@
 services:
   db:
     image: mariadb
+    volumes:
+      - ./my.cnf:/etc/mysql/my.cnf
     environment:
-      - MARIADB_USER=${DBUSER}
-      - MARIADB_PASSWORD=${DBPASSWORD}
       - MARIADB_DATABASE=${DATABASE}
-      - MARIADB_RANDOM_ROOT_PASSWORD=1
+      - MARIADB_ROOT_PASSWORD=${DBPASSWORD}
 
   web:
     image: dunglas/frankenphp
@@ -20,7 +20,7 @@ services:
     entrypoint: ["/bin/sh","-c"]
     environment:
       - DATABASE_HOSTNAME=db
-      - DATABASE_USERNAME=${DBUSER}
+      - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=${DBPASSWORD}
       - DATABASE_DATABASE=${DATABASE}
     tty: true
