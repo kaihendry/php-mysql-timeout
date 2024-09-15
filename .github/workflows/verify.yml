@@ -18,4 +18,4 @@ jobs:
       env:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
-    - run: curl -k -f https://localhost
+    - run: curl -skf https://localhost
