@@ -34,7 +34,6 @@ if ($mysqli->connect_error) {
 $performanceSchemaQuery = "SHOW VARIABLES LIKE 'performance_schema';";
 $result = $mysqli->query($performanceSchemaQuery);
 if ($result) {
-    // Fetch the result
     $row = $result->fetch_assoc();
     echo "Variable: " . $row['Variable_name'] . "<br>";
     echo "Value: " . $row['Value'] . "<br>";
@@ -43,3 +42,7 @@ if ($result) {
 }
 
 $mysqli->close();
+
+$log->info('database connection successful');
+
+
