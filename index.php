@@ -1,5 +1,14 @@
 <?php
 
+set_exception_handler(function ($exception) {
+    http_response_code(500);
+});
+
+// Set a custom error handler
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    http_response_code(500);
+});
+
 require 'vendor/autoload.php'; // This autoloads Monolog
 
 use Monolog\Level;
@@ -34,5 +43,3 @@ if ($result) {
 }
 
 $mysqli->close();
-
-?>

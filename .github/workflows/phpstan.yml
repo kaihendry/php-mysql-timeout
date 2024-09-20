@@ -1,4 +1,4 @@
-name: PHPStan
+name: Lint
 
 on:
   push:
@@ -35,3 +35,8 @@ jobs:
 
       - name: Run PHPStan
         run: phpstan analyse
+
+      - name: Execute Code Sniffer via phpcs
+        run: |
+          composer require --dev squizlabs/php_codesniffer
+          vendor/bin/phpcs --standard=PSR12 app

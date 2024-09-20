@@ -19,3 +19,4 @@ jobs:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
     - run: curl -skf https://localhost
+    - run: docker-compose logs
