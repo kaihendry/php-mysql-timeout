@@ -11,11 +11,11 @@ jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    # don't bring up the db service (let's see what happens)
-    - run: docker compose up --no-deps --detach --wait web
-      env:
-        DBPASSWORD: ${{ env.DBPASSWORD }}
-        DATABASE: ${{ env.DATABASE }}
-    - run: curl -isk https://localhost
-    - run: ls -alh && jq . logs.jsonl
+      - uses: actions/checkout@v4
+      # don't bring up the db service (let's see what happens)
+      - run: docker compose up --no-deps --detach --wait web
+        env:
+          DBPASSWORD: ${{ env.DBPASSWORD }}
+          DATABASE: ${{ env.DATABASE }}
+      - run: curl -isk https://localhost
+      - run: docker compose logs
