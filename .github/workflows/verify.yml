@@ -19,4 +19,4 @@ jobs:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
     - run: curl -viskf https://localhost
-    - run: docker compose logs
+    - run: jq . logs.jsonl

@@ -18,7 +18,7 @@ use Monolog\Formatter\JsonFormatter;
 use Monolog\ErrorHandler;
 
 $log = new Logger('name');
-$stderrHandler = new StreamHandler('php://stderr', Logger::DEBUG);
+$stderrHandler = new StreamHandler('logs.jsonl', Logger::DEBUG);
 $stderrHandler->setFormatter(new JsonFormatter());
 $log->pushHandler($stderrHandler);
 
