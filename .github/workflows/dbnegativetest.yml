@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - run: docker-compose up --no-deps web --detach --wait
+    - run: docker compose up --no-deps web --detach --wait
       env:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
     - run: curl -skf https://localhost
-    - run: docker-compose logs
+    - run: docker compose logs

@@ -34,7 +34,7 @@ jobs:
           custom-cache-suffix: $(date -u "+%Y-%m")
 
       - name: Run PHPStan
-        run: phpstan analyse
+        run: phpstan analyse .
 
       - name: Execute Code Sniffer via phpcs
         run: |
