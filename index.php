@@ -23,6 +23,8 @@ $stderrHandler->setFormatter(new JsonFormatter());
 $log->pushHandler($stderrHandler);
 
 ErrorHandler::register($log);
+// mysqli methods throw exceptions on error
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $mysqli = new mysqli('db', getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_DATABASE'));
 
@@ -44,5 +46,6 @@ if ($result) {
 $mysqli->close();
 
 $log->info('database connection successful');
+
 
 
