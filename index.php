@@ -27,11 +27,11 @@ ErrorHandler::register($log);
 $mysqli = new mysqli('db', getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_DATABASE'));
 
 if ($mysqli->connect_error) {
-	throw new Exception('Database Connection Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+    throw new Exception('Database Connection Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
 // check performace_schema is enabled
-$performanceSchemaQuery =  "SHOW VARIABLES LIKE 'performance_schema';";
+$performanceSchemaQuery = "SHOW VARIABLES LIKE 'performance_schema';";
 $result = $mysqli->query($performanceSchemaQuery);
 if ($result) {
     // Fetch the result
@@ -39,7 +39,7 @@ if ($result) {
     echo "Variable: " . $row['Variable_name'] . "<br>";
     echo "Value: " . $row['Value'] . "<br>";
 } else {
-	throw new Exception("Unable to fetch performance schema");
+    throw new Exception("Unable to fetch performance schema");
 }
 
 $mysqli->close();
