@@ -18,4 +18,4 @@ jobs:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
     - run: curl -isk https://localhost
-    - run: jq . logs.jsonl
+    - run: ls -alh && jq . logs.jsonl
