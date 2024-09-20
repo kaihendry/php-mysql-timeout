@@ -20,4 +20,5 @@ jobs:
         DATABASE: ${{ env.DATABASE }}
     - uses: "ramsey/composer-install@v3"
     - run: curl -iskf https://localhost
+    - run: sleep 10
     - run: docker compose logs
