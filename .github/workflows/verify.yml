@@ -18,5 +18,6 @@ jobs:
       env:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
-    - run: curl -viskf https://localhost
+    - uses: "ramsey/composer-install@v3"
+    - run: curl -iskf https://localhost
     - run: jq . logs.jsonl

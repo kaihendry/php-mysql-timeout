@@ -17,5 +17,5 @@ jobs:
       env:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
-    - run: curl -visk https://localhost
+    - run: curl -isk https://localhost
     - run: jq . logs.jsonl
