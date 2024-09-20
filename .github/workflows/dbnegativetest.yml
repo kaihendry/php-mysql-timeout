@@ -1,4 +1,4 @@
-name: Docker Compose and Smoke Test
+name: Negative test
 
 on:
   push:
@@ -16,5 +16,5 @@ jobs:
       env:
         DBPASSWORD: ${{ env.DBPASSWORD }}
         DATABASE: ${{ env.DATABASE }}
-    - run: curl -skf https://localhost
+    - run: curl -visk https://localhost
     - run: docker compose logs
