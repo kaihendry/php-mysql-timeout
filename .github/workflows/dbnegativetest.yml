@@ -18,4 +18,5 @@ jobs:
           DBPASSWORD: ${{ env.DBPASSWORD }}
           DATABASE: ${{ env.DATABASE }}
       - run: curl -isk https://localhost
+      - run: sleep 5
       - run: docker compose logs
