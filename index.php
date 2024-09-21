@@ -2,16 +2,17 @@
 
 set_exception_handler(function ($exception) {
     http_response_code(500);
+    flush();
 });
 
 // Set a custom error handler
 set_error_handler(function ($errno, $errstr, $errfile, $errline) {
     http_response_code(500);
+    flush();
 });
 
 require 'vendor/autoload.php'; // This autoloads Monolog
 
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\JsonFormatter;
@@ -21,6 +22,9 @@ $log = new Logger('name');
 $stderrHandler = new StreamHandler('php://stdout', Logger::DEBUG);
 $stderrHandler->setFormatter(new JsonFormatter());
 $log->pushHandler($stderrHandler);
+
+$log->info('starting up');
+
 
 ErrorHandler::register($log);
 // mysqli methods throw exceptions on error
