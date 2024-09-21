@@ -46,6 +46,3 @@ if ($result) {
 $mysqli->close();
 
 $log->info('database connection successful');
-
-
-
