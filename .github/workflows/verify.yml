@@ -21,3 +21,4 @@ jobs:
     - uses: "ramsey/composer-install@v3"
     - run: curl -iskf https://localhost
     - run: docker compose logs
+      if: ${{ always() }}
