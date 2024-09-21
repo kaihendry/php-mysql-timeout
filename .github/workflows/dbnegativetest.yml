@@ -17,5 +17,6 @@ jobs:
         env:
           DBPASSWORD: ${{ env.DBPASSWORD }}
           DATABASE: ${{ env.DATABASE }}
+      - uses: "ramsey/composer-install@v3"
       - run: curl -isk https://localhost
       - run: docker compose logs
