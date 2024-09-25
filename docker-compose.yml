@@ -1,13 +1,13 @@
 services:
   db:
-    image: mariadb
+    image: mysql
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
     ports:
       - "3306:3306"
     environment:
-      - MARIADB_DATABASE=${DATABASE}
-      - MARIADB_ROOT_PASSWORD=${DBPASSWORD}
+      - MYSQL_DATABASE=${DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
 
   web:
     build: .
