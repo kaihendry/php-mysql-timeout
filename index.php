@@ -30,15 +30,25 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($log) {
     die();
 });
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
+    // Set the connection options
+    $options = [
+        PDO::ATTR_TIMEOUT => 1, // Timeout in seconds
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ];
 
-$mysqli = mysqli_init();
-$mysqli->real_connect('db', getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_DATABASE'));
+    // Create a new PDO instance
+    $pdo = new PDO('mysql:host=db;dbname=' . getenv('DATABASE_DATABASE'), getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), $options);
 
-$sql = "
-    SELECT /*+ MAX_EXECUTION_TIME(1000) */ BENCHMARK(100000000, MD5('test'));
-";
-$result = $mysqli->query($sql);
-while ($row = $result->fetch_assoc()) {
-    print_r($row);
+    $sql = " 
+     SELECT /*+ MAX_EXECUTION_TIME(1000) */ BENCHMARK(100000000, MD5('test'));
+    ";
+    $stmt = $pdo->query($sql);
+
+    // Fetch and print the results
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        print_r($row);
+    }
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
 }
