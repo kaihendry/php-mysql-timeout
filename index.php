@@ -17,7 +17,11 @@ ErrorHandler::register($log);
 set_exception_handler(function ($e) use ($log) {
     $errId = "X" . uniqid();
     $log->error($e->getMessage(), ['exception' => $e, 'errId' => $errId]);
-    // check for 3024 query execution timeout
+    if (str_contains($e->getMessage(), "3024 Query execution was interrupted")) {
+        http_response_code(408);
+        echo json_encode(['error' => 'Query execution timeout', 'errId' => $errId]);
+        die();
+    }
     http_response_code(500);
     echo json_encode(['error' => 'An exception occurred', 'errId' => $errId]);
     die();
