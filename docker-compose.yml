@@ -3,6 +3,8 @@ services:
     image: mariadb
     volumes:
       - ./my.cnf:/etc/mysql/my.cnf
+    ports:
+      - "3306:3306"
     environment:
       - MARIADB_DATABASE=${DATABASE}
       - MARIADB_ROOT_PASSWORD=${DBPASSWORD}

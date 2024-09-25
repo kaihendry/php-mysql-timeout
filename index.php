@@ -30,30 +30,13 @@ set_error_handler(function ($errno, $errstr, $errfile, $errline) use ($log) {
     die();
 });
 
-// throw new Exception('hiii');
-// trigger_error('Error', E_USER_ERROR);
-
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$mysqli = mysqli_connect('db', getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_DATABASE'));
+$mysqli = mysqli_init();
+$mysqli->real_connect('db', getenv('DATABASE_USERNAME'), getenv('DATABASE_PASSWORD'), getenv('DATABASE_DATABASE'));
 
-
-// output performance schema
 $sql = "
-    SELECT 
-        DIGEST_TEXT, 
-        SCHEMA_NAME, 
-        COUNT_STAR, 
-        SUM_TIMER_WAIT, 
-        AVG_TIMER_WAIT 
-    FROM 
-        performance_schema.events_statements_summary_by_digest 
-    WHERE 
-        SCHEMA_NAME NOT IN ('performance_schema') 
-        AND DIGEST_TEXT NOT LIKE '%performance_schema%' 
-    ORDER BY 
-        SUM_TIMER_WAIT DESC 
-    LIMIT 10
+    SELECT /*+ MAX_EXECUTION_TIME(1000) */ BENCHMARK(100000000, MD5('test'));
 ";
 $result = $mysqli->query($sql);
 while ($row = $result->fetch_assoc()) {
