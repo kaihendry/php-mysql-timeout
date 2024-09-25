@@ -17,6 +17,7 @@ ErrorHandler::register($log);
 set_exception_handler(function ($e) use ($log) {
     $errId = "X" . uniqid();
     $log->error($e->getMessage(), ['exception' => $e, 'errId' => $errId]);
+    // check for 3024 query execution timeout
     http_response_code(500);
     echo json_encode(['error' => 'An exception occurred', 'errId' => $errId]);
     die();
