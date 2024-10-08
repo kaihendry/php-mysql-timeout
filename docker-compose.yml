@@ -10,7 +10,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DBPASSWORD}
 
   web:
-    build: .
+    image: dunglas/frankenphp
     depends_on:
       - db
     volumes:
@@ -19,8 +19,13 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
+    entrypoint: ["/bin/sh","-c"]
     environment:
       - DATABASE_HOSTNAME=db
       - DATABASE_USERNAME=root
       - DATABASE_PASSWORD=${DBPASSWORD}
       - DATABASE_DATABASE=${DATABASE}
+    command:
+      - |
+        install-php-extensions pdo_mysql
+        frankenphp run --config /etc/caddy/Caddyfile
