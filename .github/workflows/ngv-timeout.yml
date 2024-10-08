@@ -1,0 +1,24 @@
+name: Test timeout on fake endpoint
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+    DBPASSWORD: bar
+    DATABASE: baz
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - run: docker compose up --wait --detach --quiet-pull
+      env:
+        DBPASSWORD: ${{ env.DBPASSWORD }}
+        DATABASE: ${{ env.DATABASE }}
+    - uses: "ramsey/composer-install@v3"
+    - run: test $(curl -sk -o /dev/null -w "%{http_code}" https://localhost/negative) -eq 408
+    - run: docker compose logs
+      if: ${{ always() }}
