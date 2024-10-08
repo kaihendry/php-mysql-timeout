@@ -24,19 +24,28 @@ jobs:
           coverage: none
           tools: phpstan
 
-      # Install dependencies and handle caching in one go.
-      # Dependencies need to be installed to make sure the PHPUnit classes are recognized.
-      # @link https://github.com/marketplace/actions/install-php-dependencies-with-composer
       - name: Install Composer dependencies
         uses: "ramsey/composer-install@v3"
-        with:
-          # Bust the cache at least once a month - output format: YYYY-MM.
-          custom-cache-suffix: $(date -u "+%Y-%m")
 
       - name: Run PHPStan
-        run: phpstan analyse index.php
+        run: phpstan analyse positive negative
+
+  phpcs:
+    name: "PHP_CodeSniffer"
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 'latest'
+
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v3"
 
       - name: Execute Code Sniffer via phpcs
         run: |
           composer require --dev squizlabs/php_codesniffer
-          vendor/bin/phpcs --standard=PSR12 index.php
+          vendor/bin/phpcs --standard=PSR12 --ignore=vendor .
